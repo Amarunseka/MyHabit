@@ -7,15 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		454C3F2B26C14F3600A1A0A7 /* SFProText_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */; };
+		454C3F2C26C14F3600A1A0A7 /* SFProText_Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */; };
+		454C3F2D26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */; };
+		454C3F2F26C1541C00A1A0A7 /* InfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C3F2E26C1541C00A1A0A7 /* InfoStorage.swift */; };
+		454C3F3426C167DE00A1A0A7 /* HabitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C3F3326C167DE00A1A0A7 /* HabitCollectionViewCell.swift */; };
+		454C3F3826C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C3F3726C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift */; };
+		454C3F3A26C1C68800A1A0A7 /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */; };
+		454C3F3E26C3E62300A1A0A7 /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */; };
 		45BDC2F226C12CFC00EA9EF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC2F126C12CFC00EA9EF9 /* AppDelegate.swift */; };
 		45BDC2F426C12CFC00EA9EF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC2F326C12CFC00EA9EF9 /* SceneDelegate.swift */; };
 		45BDC2F626C12CFC00EA9EF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC2F526C12CFC00EA9EF9 /* ViewController.swift */; };
 		45BDC2F926C12CFC00EA9EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */; };
 		45BDC2FB26C12D0000EA9EF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */; };
 		45BDC2FE26C12D0000EA9EF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */; };
+		45BDC30626C12D9F00EA9EF9 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */; };
+		45BDC30826C12DA800EA9EF9 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC30726C12DA800EA9EF9 /* InfoViewController.swift */; };
+		45BDC30A26C1400600EA9EF9 /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC30926C1400600EA9EF9 /* HabitsStore.swift */; };
+		45BDC30F26C1480F00EA9EF9 /* FontsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDC30E26C1480F00EA9EF9 /* FontsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Regular.ttf; sourceTree = "<group>"; };
+		454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Semibold.ttf; sourceTree = "<group>"; };
+		454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProDisplay_Semibold.otf; sourceTree = "<group>"; };
+		454C3F2E26C1541C00A1A0A7 /* InfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStorage.swift; sourceTree = "<group>"; };
+		454C3F3326C167DE00A1A0A7 /* HabitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewCell.swift; sourceTree = "<group>"; };
+		454C3F3726C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
+		454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
+		454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		45BDC2EE26C12CFC00EA9EF9 /* MyHabits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BDC2F126C12CFC00EA9EF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45BDC2F326C12CFC00EA9EF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +44,10 @@
 		45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45BDC2FD26C12D0000EA9EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45BDC2FF26C12D0000EA9EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
+		45BDC30726C12DA800EA9EF9 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		45BDC30926C1400600EA9EF9 /* HabitsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
+		45BDC30E26C1480F00EA9EF9 /* FontsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +61,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		454C3F3226C1670A00A1A0A7 /* Habits */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */,
+				454C3F3326C167DE00A1A0A7 /* HabitCollectionViewCell.swift */,
+				454C3F3726C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift */,
+				454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */,
+				454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */,
+			);
+			path = Habits;
+			sourceTree = "<group>";
+		};
 		45BDC2E526C12CFC00EA9EF9 = {
 			isa = PBXGroup;
 			children = (
@@ -59,12 +95,36 @@
 				45BDC2F126C12CFC00EA9EF9 /* AppDelegate.swift */,
 				45BDC2F326C12CFC00EA9EF9 /* SceneDelegate.swift */,
 				45BDC2F526C12CFC00EA9EF9 /* ViewController.swift */,
-				45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */,
-				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
+				454C3F3226C1670A00A1A0A7 /* Habits */,
+				45BDC30B26C1442600EA9EF9 /* Info */,
+				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
 				45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */,
+				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
+				45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */,
 				45BDC2FF26C12D0000EA9EF9 /* Info.plist */,
+				45BDC31026C1495C00EA9EF9 /* Fonts */,
 			);
 			path = MyHabits;
+			sourceTree = "<group>";
+		};
+		45BDC30B26C1442600EA9EF9 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC30726C12DA800EA9EF9 /* InfoViewController.swift */,
+				454C3F2E26C1541C00A1A0A7 /* InfoStorage.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		45BDC31026C1495C00EA9EF9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */,
+				454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */,
+				454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */,
+				45BDC30E26C1480F00EA9EF9 /* FontsViewController.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +184,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				454C3F2D26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf in Resources */,
 				45BDC2FE26C12D0000EA9EF9 /* LaunchScreen.storyboard in Resources */,
 				45BDC2FB26C12D0000EA9EF9 /* Assets.xcassets in Resources */,
 				45BDC2F926C12CFC00EA9EF9 /* Main.storyboard in Resources */,
+				454C3F2C26C14F3600A1A0A7 /* SFProText_Semibold.ttf in Resources */,
+				454C3F2B26C14F3600A1A0A7 /* SFProText_Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,9 +200,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BDC30A26C1400600EA9EF9 /* HabitsStore.swift in Sources */,
 				45BDC2F626C12CFC00EA9EF9 /* ViewController.swift in Sources */,
+				454C3F3826C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift in Sources */,
+				454C3F2F26C1541C00A1A0A7 /* InfoStorage.swift in Sources */,
 				45BDC2F226C12CFC00EA9EF9 /* AppDelegate.swift in Sources */,
+				454C3F3A26C1C68800A1A0A7 /* HabitViewController.swift in Sources */,
 				45BDC2F426C12CFC00EA9EF9 /* SceneDelegate.swift in Sources */,
+				45BDC30F26C1480F00EA9EF9 /* FontsViewController.swift in Sources */,
+				45BDC30826C12DA800EA9EF9 /* InfoViewController.swift in Sources */,
+				45BDC30626C12D9F00EA9EF9 /* HabitsViewController.swift in Sources */,
+				454C3F3E26C3E62300A1A0A7 /* HabitDetailsViewController.swift in Sources */,
+				454C3F3426C167DE00A1A0A7 /* HabitCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,12 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SFProDisplay_Semibold.otf</string>
+		<string>SFProText_Regular.ttf</string>
+		<string>SFProText_Semibold.ttf</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
