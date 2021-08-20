@@ -91,11 +91,17 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     
     func configure(with: Habit) {
+        markOfCompletion.backgroundColor = .white
         titleOfHabitLabel.text = with.name
         timeToDoItLabel.text = with.dateString
         counterOfExecutionsLabel.text = "Счётчик: \(with.trackDates.count)"
         titleOfHabitLabel.textColor = with.color
         markOfCompletion.layer.borderColor = with.color.cgColor
+        
+        if with.isAlreadyTakenToday == true {
+            markOfCompletion.backgroundColor = with.color
+            checkmark.alpha = 1
+        }
         habit = with
     }
     
@@ -158,9 +164,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
         
         if habit.isAlreadyTakenToday == false {
             HabitsStore.shared.track(habit)
-            markOfCompletion.backgroundColor = self.habit?.color
-            checkmark.alpha = 1
-            counterOfExecutionsLabel.text = "Счётчик: \(habit.trackDates.count)"
             delegate?.reloadData()
         }
     }

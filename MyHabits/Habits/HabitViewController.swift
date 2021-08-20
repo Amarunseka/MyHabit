@@ -333,7 +333,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         let cancel = UIAlertAction(title: "Отмена", style: .destructive)
         let deleteHabit = UIAlertAction(title: "Удалить", style: .default)
         {_ in
-            
             self.store.habits.remove(at: habitId)
             self.habitId = nil
             self.backToHabitsVCDelegate?.backToHabitsVC()

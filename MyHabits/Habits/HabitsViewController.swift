@@ -8,8 +8,7 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
-    
-    
+        
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInsetReference = .fromSafeArea
@@ -29,6 +28,9 @@ class HabitsViewController: UIViewController {
         setupConstraints()
     }
 
+    @objc func reload(){
+        self.collectionView.reloadData()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,7 +74,6 @@ class HabitsViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
         ].forEach{$0 .isActive = true}
-        
     }
     
     
@@ -115,12 +116,6 @@ extension HabitsViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
             
             cell.configure(with: HabitsStore.shared.habits[indexPath.item])
-            
-            if HabitsStore.shared.habits[indexPath.item].isAlreadyTakenToday == true {
-                cell.markOfCompletion.backgroundColor = HabitsStore.shared.habits[indexPath.item].color
-                cell.checkmark.alpha = 1
-            }
-            
             cell.delegate = self
             return cell
         }
