@@ -26,20 +26,18 @@ class HabitsViewController: UIViewController {
         view.backgroundColor = .white
         setupCollectionView()
         setupConstraints()
-
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        collectionView.reloadData()
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
     
     
     func setupNavigationBar() {
@@ -109,11 +107,19 @@ extension HabitsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
+            cell.setupProgress(progress: HabitsStore.shared.todayProgress)
             return cell
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
-            cell.habit = HabitsStore.shared.habits[indexPath.row]
+            
+            cell.configure(with: HabitsStore.shared.habits[indexPath.item])
+            
+            if HabitsStore.shared.habits[indexPath.item].isAlreadyTakenToday == true {
+                cell.markOfCompletion.backgroundColor = HabitsStore.shared.habits[indexPath.item].color
+                cell.checkmark.alpha = 1
+            }
+            
             cell.delegate = self
             return cell
         }
@@ -173,6 +179,7 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
 
 extension HabitsViewController: HabitCollectionCellDelegate {
     func reloadData() {
+
         self.collectionView.reloadData()
     }
 }

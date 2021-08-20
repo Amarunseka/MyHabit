@@ -136,7 +136,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         setupColorHabit()
         setupTimeOfHabitTextField()
         setupDeleteButton()
-
         setupConstraints()
     }
     
@@ -146,8 +145,8 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
 
     func setupNavigationBar(){
-        title = "Создать"
-        
+        habitId == nil ? (title = "Создать") : (title = "Править")
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить",
             style: .plain, target: self, action: #selector(closeWindow))
         
@@ -198,7 +197,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             setTimeOfHabitPickerView.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             setTimeOfHabitPickerView.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor),
             
-            
         ] .forEach{$0 .isActive = true}
         
         if habitId != nil {
@@ -216,7 +214,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     func setupColorHabit() {
         colorOfHabitView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choseColor)))
-        
     }
     
     @objc func choseColor(sender: UITapGestureRecognizer) {
@@ -268,7 +265,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         
         timeOfHabitTextField.attributedText = textFullTimeTextField
     }
-    
    
     
     func editDate(){
@@ -333,6 +329,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         {_ in
             
             self.store.habits.remove(at: habitId)
+            self.habitId = nil
             self.navigationController?.popToRootViewController(animated: true)
             self.dismiss(animated: true, completion: nil)
         }

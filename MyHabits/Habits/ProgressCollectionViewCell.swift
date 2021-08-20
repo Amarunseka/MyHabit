@@ -7,14 +7,15 @@
 
 import UIKit
 
+
 class ProgressCollectionViewCell: UICollectionViewCell {
     
-    let todayProgress = HabitsStore.shared.todayProgress
+//    var todayProgress: Float?
     
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Все получиться!"
+        label.text = "Все получится!"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.sizeToFit()
         label.textColor = .systemGray
@@ -50,6 +51,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         setupCell()
         setupConstraints()
     }
+
     
     
     func setupCell() {
@@ -60,10 +62,17 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(percentsProgressLabel)
         contentView.addSubview(progressView)
-        progressView.setProgress(todayProgress, animated: true)
-        percentsProgressLabel.text = "\(Int(round(Double(todayProgress) * pow(100.0, 2.0)) / pow(10.0, 2.0)))%"
+        
     }
     
+    func setupProgress(progress: Float) {
+//        todayProgress = progress
+        progressView.setProgress(progress, animated: true)
+        percentsProgressLabel.text = "\(Int(round(Double(progress) * pow(100.0, 2.0)) / pow(10.0, 2.0)))%"
+
+    }
+    
+
     
     func setupConstraints() {
         [

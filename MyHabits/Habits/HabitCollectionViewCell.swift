@@ -13,21 +13,10 @@ protocol HabitCollectionCellDelegate: AnyObject {
 
 class HabitCollectionViewCell: UICollectionViewCell {
         
-    var habit: Habit? {
-        didSet {
-            titleOfHabitLabel.text = habit?.name
-            timeToDoItLabel.text = String((habit?.dateString[...(habit?.dateString.lastIndex(of: " "))!]) ?? "")
-            counterOfExecutionsLabel.text = "Счётчик: \(habit?.trackDates.count ?? 0)"
-            
-            titleOfHabitLabel.textColor = habit?.color ?? UIColor()
-            markOfCompletion.layer.borderColor = habit?.color.cgColor ?? UIColor() as! CGColor
-            if habit?.isAlreadyTakenToday == true {
-                markOfCompletion.backgroundColor = habit?.color
-                checkmark.alpha = 1}
-        }
-    }
+    var habit: Habit?
     
     weak var delegate: HabitCollectionCellDelegate?
+    
     
     let titleOfHabitLabel: UILabel = {
         let label = UILabel()
@@ -98,6 +87,16 @@ class HabitCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupCell()
         setupConstraints()
+    }
+    
+    
+    func configure(with: Habit) {
+        titleOfHabitLabel.text = with.name
+        timeToDoItLabel.text = with.dateString
+        counterOfExecutionsLabel.text = "Счётчик: \(with.trackDates.count)"
+        titleOfHabitLabel.textColor = with.color
+        markOfCompletion.layer.borderColor = with.color.cgColor
+        habit = with
     }
     
     
