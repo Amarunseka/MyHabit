@@ -9,9 +9,7 @@ import UIKit
 
 
 class ProgressCollectionViewCell: UICollectionViewCell {
-    
-//    var todayProgress: Float?
-    
+        
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +51,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
 
     
-    
     func setupCell() {
         contentView.layer.cornerRadius = 8
         contentView.backgroundColor = .white
@@ -66,12 +63,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
     
     func setupProgress(progress: Float) {
-//        todayProgress = progress
         progressView.setProgress(progress, animated: true)
         percentsProgressLabel.text = "\(Int(round(Double(progress) * pow(100.0, 2.0)) / pow(10.0, 2.0)))%"
-
     }
-    
 
     
     func setupConstraints() {

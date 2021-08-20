@@ -9,8 +9,11 @@ import UIKit
 
 class HabitDetailsViewController: UIViewController {
 
+    var back = false
+    
     let cellID = "CellID"
     var habitId: Int?
+    let habit = HabitViewController()
         
     let activityLabel: UILabel = {
         let label = UILabel()
@@ -72,14 +75,7 @@ class HabitDetailsViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let habitId = habitId else {return}
-
-        if HabitsStore.shared.habits.count <= habitId {
-            navigationController?.popToRootViewController(animated: true)
-        } else {
-            self.title = HabitsStore.shared.habits[habitId].name
-            navigationController?.navigationBar.prefersLargeTitles = false
-        }
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     
@@ -90,6 +86,7 @@ class HabitDetailsViewController: UIViewController {
         editHabitController.habit = HabitsStore.shared.habits[habitId]
         editHabitController.colorOfHabitView.layer.borderWidth = 0
         editHabitController.habitId = habitId
+        editHabitController.backToHabitsVCDelegate = self
 
 
         let habitViewController = UINavigationController(rootViewController: editHabitController)
@@ -112,8 +109,10 @@ extension HabitDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID)!
+        var cellContent = cell.defaultContentConfiguration()
+        cellContent.text = HabitsStore.shared.trackDateString(forIndex: indexPath.row)
+        cell.contentConfiguration = cellContent
         cell.tintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
-        cell.textLabel?.text = HabitsStore.shared.trackDateString(forIndex: indexPath.row)
 
         if let habitId = habitId {
             if HabitsStore.shared.habit(
@@ -128,3 +127,9 @@ extension HabitDetailsViewController: UITableViewDataSource {
 }
 
 
+extension HabitDetailsViewController: ModalViewControllerDelegate {
+    func backToHabitsVC() {
+        navigationController?.dismiss(animated: false)
+        navigationController?.popToRootViewController(animated: true)
+    }
+}

@@ -9,6 +9,7 @@ import UIKit
 
 class HabitsViewController: UIViewController {
     
+    
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInsetReference = .fromSafeArea
@@ -183,4 +184,6 @@ extension HabitsViewController: HabitCollectionCellDelegate {
         self.collectionView.reloadData()
     }
 }
+
+
    

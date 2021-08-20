@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ModalViewControllerDelegate: AnyObject {
+    func backToHabitsVC()
+}
+
 class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate {
+    
+    weak var backToHabitsVCDelegate: ModalViewControllerDelegate?
 
     var habitId: Int?
     lazy var trackDates: [Date] = []
@@ -330,8 +336,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             
             self.store.habits.remove(at: habitId)
             self.habitId = nil
-            self.navigationController?.popToRootViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
+            self.backToHabitsVCDelegate?.backToHabitsVC()
         }
         
         alert.addAction(cancel)

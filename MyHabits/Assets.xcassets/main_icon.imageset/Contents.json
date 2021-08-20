@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "main_icon.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -9,7 +10,6 @@
       "scale" : "2x"
     },
     {
-      "filename" : "AppIcon-1024px.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
