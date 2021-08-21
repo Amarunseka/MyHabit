@@ -15,26 +15,12 @@ protocol ModalViewControllerDelegate: AnyObject {
 class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate {
     
     weak var backToHabitsVCDelegate: ModalViewControllerDelegate?
-
-    var habitId: Int?
-    lazy var trackDates: [Date] = []
         
     var habit: Habit? {
         didSet {
-            nameHabitTextField.text = habit?.name
-            nameHabitTextField.textColor = habit?.color
-            colorOfHabitView.backgroundColor = habit?.color
-            trackDates = habit?.trackDates ?? []
-            
-            tempDateOfHabit = habit?.date
-            tempDateString = habit?.dateString
-            editDate()
+            editHabit()
         }
     }
-    
-    
-    let store = HabitsStore.shared
-    
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -62,6 +48,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         text.translatesAutoresizingMaskIntoConstraints = false
         text.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
+        text.returnKeyType = UIReturnKeyType.done
         text.textColor = .black
         text.textAlignment = .left
         return text
@@ -111,7 +98,6 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         text.textColor = .black
         text.textAlignment = .left
         text.text = "Каждый день в"
-        
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
@@ -148,12 +134,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     override func viewDidAppear(_ animated: Bool) {
 
-
     }
 
     func setupNavigationBar(){
-        habitId == nil ? (title = "Создать") : (title = "Править")
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить",
             style: .plain, target: self, action: #selector(closeWindow))
         
@@ -171,6 +154,29 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         view.addSubview(titleForTimeOfHabitLabel)
         view.addSubview(timeOfHabitTextField)
         view.addSubview(setTimeOfHabitPickerView)
+        view.addSubview(buttonDeleteHabit)
+
+    }
+    
+    
+    func editHabit() {
+        if let habit = habit {
+            nameHabitTextField.text = habit.name
+            nameHabitTextField.textColor = habit.color
+            colorOfHabitView.backgroundColor = habit.color
+            colorOfHabitView.layer.borderWidth = 0
+            tempDateOfHabit = habit.date
+            tempDateString = habit.dateString
+            navigationItem.title = "Править"
+            buttonDeleteHabit.isHidden = false
+            editDate()
+        } else {
+            nameHabitTextField.text = ""
+            colorOfHabitView.backgroundColor = .white
+            tempDateOfHabit = Date()
+            navigationItem.title = "Создать"
+            buttonDeleteHabit.isHidden = true
+        }
     }
  
     
@@ -204,15 +210,12 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             setTimeOfHabitPickerView.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             setTimeOfHabitPickerView.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor),
             
+            buttonDeleteHabit.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            buttonDeleteHabit.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
+            buttonDeleteHabit.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)
+            
         ] .forEach{$0 .isActive = true}
         
-        if habitId != nil {
-            view.addSubview(buttonDeleteHabit)
-            [
-                buttonDeleteHabit.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-                buttonDeleteHabit.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
-                buttonDeleteHabit.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)] .forEach{$0 .isActive = true}
-        }
     }
     
     
@@ -296,21 +299,20 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         guard tempDateOfHabit != nil else {return}
         guard colorOfHabitView.backgroundColor != nil else {return}
         
-        
-        let newHabit = Habit(
-            name: nameHabitTextField.text!,
-            date: tempDateOfHabit!,
-            color: colorOfHabitView.backgroundColor!
-        )
-        newHabit.trackDates = trackDates
-        
-        if let habitId = habitId {
-                        
-            store.habits[habitId] = newHabit
-            
+        if let habit = habit {
+            habit.name = nameHabitTextField.text ?? ""
+            habit.date = tempDateOfHabit ?? Date()
+            habit.color = colorOfHabitView.backgroundColor ?? .white
+            HabitsStore.shared.save()
         } else {
+            let newHabit = Habit(name: nameHabitTextField.text ?? "",
+                                 date: tempDateOfHabit ?? Date(),
+                                 color: colorOfHabitView.backgroundColor ?? .white)
+            
+            let store = HabitsStore.shared
             store.habits.append(newHabit)
         }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeTitle"), object: nil)
 
         navigationController?.popToRootViewController(animated: true)
         dismiss(animated: true, completion: nil)
@@ -325,17 +327,16 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
     
     @objc func deleteHabit(_ sender: UIButton) {
-        guard let habitId = self.habitId else {return}
+        guard let habit = habit else {return}
         let alert = UIAlertController(
             title: "Удалить привычку",
-            message: "Вы хотите удалить привычку \n\(store.habits[habitId].name)?",
+            message: "Вы хотите удалить привычку \n\(habit.name)?",
             preferredStyle: .alert)
         
         let cancel = UIAlertAction(title: "Отмена", style: .destructive)
         let deleteHabit = UIAlertAction(title: "Удалить", style: .default)
         {_ in
-            self.store.habits.remove(at: habitId)
-            self.habitId = nil
+            HabitsStore.shared.habits.removeAll{$0 == self.habit}
             self.backToHabitsVCDelegate?.backToHabitsVC()
         }
         
@@ -355,4 +356,5 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         dismiss(animated: true, completion: nil)
     }
 }
+
 

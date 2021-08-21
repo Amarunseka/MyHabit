@@ -8,12 +8,9 @@
 import UIKit
 
 class HabitDetailsViewController: UIViewController {
-
-    var back = false
     
     let cellID = "CellID"
-    var habitId: Int?
-    let habit = HabitViewController()
+    var habit: Habit
         
     let activityLabel: UILabel = {
         let label = UILabel()
@@ -34,6 +31,16 @@ class HabitDetailsViewController: UIViewController {
         return table
     }()
     
+    init(habit: Habit) {
+        self.habit = habit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -41,8 +48,19 @@ class HabitDetailsViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        
+        navigationItem.title = habit.name
+        NotificationCenter.default.addObserver(self, selector: #selector(changeTitle), name: NSNotification.Name(rawValue: "changeTitle"), object: nil)
+    }
+    
+    @objc func changeTitle() {
+        navigationItem.title = habit.name
+    }
     
     func setupView(){
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editHabit))
         view.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
         view.addSubview(activityLabel)
@@ -55,7 +73,6 @@ class HabitDetailsViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.dataSource = self
-       
     }
     
     
@@ -72,22 +89,12 @@ class HabitDetailsViewController: UIViewController {
 
         ] .forEach{$0 .isActive = true}
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
-    
-    
-    @objc func editHabit(){        
-        guard let habitId = habitId else {return}
 
+    
+    @objc func editHabit(){
         let editHabitController = HabitViewController()
-        editHabitController.habit = HabitsStore.shared.habits[habitId]
-        editHabitController.colorOfHabitView.layer.borderWidth = 0
-        editHabitController.habitId = habitId
+        editHabitController.habit = habit
         editHabitController.backToHabitsVCDelegate = self
-
 
         let habitViewController = UINavigationController(rootViewController: editHabitController)
         habitViewController.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
@@ -113,14 +120,11 @@ extension HabitDetailsViewController: UITableViewDataSource {
         cellContent.text = HabitsStore.shared.trackDateString(forIndex: indexPath.row)
         cell.contentConfiguration = cellContent
         cell.tintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
-
-        if let habitId = habitId {
-            if HabitsStore.shared.habit(
-                HabitsStore.shared.habits[habitId],
-                isTrackedIn: HabitsStore.shared.dates[indexPath.row]) == true {
-                
-                cell.accessoryType = .checkmark
-            }
+        
+        if HabitsStore.shared.habit(
+            habit, isTrackedIn: HabitsStore.shared.dates[indexPath.row]) == true {
+            
+            cell.accessoryType = .checkmark
         }
         return cell
     }
@@ -133,3 +137,4 @@ extension HabitDetailsViewController: ModalViewControllerDelegate {
         navigationController?.popToRootViewController(animated: true)
     }
 }
+

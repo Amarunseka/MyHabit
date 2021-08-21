@@ -9,12 +9,14 @@ import UIKit
 
 class HabitsViewController: UIViewController {
         
-    var collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInsetReference = .fromSafeArea
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()
+        
+    let appearanceNB = UINavigationBarAppearance()
     
     let habitCellID = "HabitCellID"
     let progressCellID = "ProgressCellID"
@@ -23,31 +25,27 @@ class HabitsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
         setupCollectionView()
         setupConstraints()
     }
 
-    @objc func reload(){
-        self.collectionView.reloadData()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillAppear(true)
+        collectionView.reloadData()
         setupNavigationBar()
+
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        collectionView.reloadData()
-    }
-    
     
     func setupNavigationBar() {
+        appearanceNB.configureWithOpaqueBackground()
+        appearanceNB.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
         navigationItem.title = "Сегодня"
-        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.hidesBarsOnSwipe = false
+        navigationItem.largeTitleDisplayMode = .always
+        UINavigationBar.appearance().scrollEdgeAppearance = appearanceNB
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add, target: self, action: #selector(createNewHabit))
     }
@@ -78,7 +76,9 @@ class HabitsViewController: UIViewController {
     
     
     @objc func createNewHabit() {
-        let habitViewController = UINavigationController(rootViewController: HabitViewController())
+        let createNewHabit = HabitViewController()
+        createNewHabit.habit = nil
+        let habitViewController = UINavigationController(rootViewController: createNewHabit)
         habitViewController.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
         habitViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         present(habitViewController, animated: true)
@@ -148,7 +148,6 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 0
     }
     
@@ -163,11 +162,9 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     }
  
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailsViewController = HabitDetailsViewController()
         
         guard indexPath.section > 0 else { return }
-        detailsViewController.title = HabitsStore.shared.habits[indexPath.row].name
-        detailsViewController.habitId = indexPath.row
+        let detailsViewController = HabitDetailsViewController(habit: HabitsStore.shared.habits[indexPath.item])
         navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }
@@ -182,3 +179,4 @@ extension HabitsViewController: HabitCollectionCellDelegate {
 
 
    
+
