@@ -91,7 +91,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     
     func configure(with: Habit) {
-        markOfCompletion.backgroundColor = .white
         titleOfHabitLabel.text = with.name
         timeToDoItLabel.text = with.dateString
         counterOfExecutionsLabel.text = "Счётчик: \(with.trackDates.count)"
@@ -101,6 +100,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
         if with.isAlreadyTakenToday == true {
             markOfCompletion.backgroundColor = with.color
             checkmark.alpha = 1
+        } else {
+            markOfCompletion.backgroundColor = .white
         }
         habit = with
     }
