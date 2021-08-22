@@ -104,8 +104,8 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
     
     
-    let timeOfHabitTextField: UITextField = {
-        let text = UITextField()
+    let timeOfHabitLabel: UILabel = {
+        let text = UILabel()
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
         text.sizeToFit()
         text.textColor = .black
@@ -120,6 +120,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         let time = UIDatePicker()
         time.preferredDatePickerStyle = .wheels
         time.datePickerMode = .time
+        time.addTarget(self, action: #selector (chooseTime), for: .valueChanged)
         time.translatesAutoresizingMaskIntoConstraints = false
         return time
     }()
@@ -141,37 +142,8 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         setupNavigationBar()
         setupView()
         setupColorHabit()
-        setupTimeOfHabitTextField()
         setupDeleteButton()
         setupConstraints()
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc fileprivate func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
-            scrollView.contentInset.bottom = keyboardSize.height
-            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        }
-    }
-    
-    @objc fileprivate func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset.bottom = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
     }
     
 
@@ -193,10 +165,11 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         containerView.addSubview(titleForColorOfHabitLabel)
         containerView.addSubview(colorOfHabitView)
         containerView.addSubview(titleForTimeOfHabitLabel)
-        containerView.addSubview(timeOfHabitTextField)
+        containerView.addSubview(timeOfHabitLabel)
         containerView.addSubview(setTimeOfHabitPickerView)
         containerView.addSubview(buttonDeleteHabit)
-
+        
+        scrollView.keyboardDismissMode = .onDrag
     }
     
     
@@ -222,18 +195,16 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
  
     
     func setupConstraints(){
-        let allHeigh = view.frame.size.height - (
+        let allElementHeigh = view.frame.size.height - (
             titleForNameOfHabitLabel.frame.size.height
             + nameHabitTextField.frame.size.height
             + titleForColorOfHabitLabel.frame.size.height
             + colorOfHabitView.frame.size.height
             + titleForTimeOfHabitLabel.frame.size.height
-            + timeOfHabitTextField.frame.size.height
+            + timeOfHabitLabel.frame.size.height
             + setTimeOfHabitPickerView.frame.size.height
             + buttonDeleteHabit.frame.size.height
-            + 0)
-        print(allHeigh)
-
+        )
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         [
@@ -270,14 +241,14 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             titleForTimeOfHabitLabel.topAnchor.constraint(equalTo: colorOfHabitView.bottomAnchor, constant: 15),
             titleForTimeOfHabitLabel.widthAnchor.constraint(equalToConstant: 50),
             
-            timeOfHabitTextField.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
-            timeOfHabitTextField.topAnchor.constraint(equalTo: titleForTimeOfHabitLabel.bottomAnchor, constant: 7),
-            timeOfHabitTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32),
+            timeOfHabitLabel.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
+            timeOfHabitLabel.topAnchor.constraint(equalTo: titleForTimeOfHabitLabel.bottomAnchor, constant: 7),
+            timeOfHabitLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32),
             
             setTimeOfHabitPickerView.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
-            setTimeOfHabitPickerView.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor),
+            setTimeOfHabitPickerView.topAnchor.constraint(equalTo: timeOfHabitLabel.bottomAnchor),
             
-            buttonDeleteHabit.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor, constant: allHeigh),
+            buttonDeleteHabit.topAnchor.constraint(equalTo: timeOfHabitLabel.bottomAnchor, constant: allElementHeigh),
             buttonDeleteHabit.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             buttonDeleteHabit.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -18),
             buttonDeleteHabit.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32)
@@ -292,6 +263,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     func setupColorHabit() {
         colorOfHabitView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choseColor)))
     }
+    
     
     @objc func choseColor(sender: UITapGestureRecognizer) {
         let colorPickerVC = UIColorPickerViewController()
@@ -323,14 +295,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
 
     var tempDateOfHabit: Date?
     var tempDateString: String?
+
     
-    func setupTimeOfHabitTextField(){
-        timeOfHabitTextField.inputView = setTimeOfHabitPickerView
-        setTimeOfHabitPickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
-    }
-    
-    
-    @objc func datePickerValueChanged(sender:UIDatePicker) {
+    @objc func chooseTime(sender:UIDatePicker) {
         tempDateOfHabit = sender.date
         
         let textFullTimeTextField = NSMutableAttributedString(string: "Каждый день в " + dateFormatter.string(from: tempDateOfHabit!))
@@ -340,9 +307,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             .foregroundColor: UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1),
         ], range: time)
         
-        timeOfHabitTextField.attributedText = textFullTimeTextField
+        timeOfHabitLabel.attributedText = textFullTimeTextField
     }
-   
+
     
     func editDate(){
         guard let tempString = tempDateString else {return}
@@ -353,10 +320,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             .foregroundColor: UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1),
         ], range: time)
         
-        timeOfHabitTextField.attributedText = textFullTimeTextField
+        timeOfHabitLabel.attributedText = textFullTimeTextField
     }
-    
-    
+
     
     
     // MARK: - CreateOrEditNewHabit setup
@@ -425,3 +391,36 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
 }
 
 
+// MARK: - extension KeyboardSetup
+extension HabitViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    @objc fileprivate func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    
+    
+    @objc fileprivate func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
+}

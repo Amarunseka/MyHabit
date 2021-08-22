@@ -34,8 +34,8 @@ class HabitsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         collectionView.reloadData()
+        viewDidLoad()
         setupNavigationBar()
-
     }
 
     
