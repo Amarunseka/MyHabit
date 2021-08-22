@@ -22,6 +22,15 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         }
     }
     
+    let scrollView = UIScrollView()
+    
+    
+    let containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_Ru")
@@ -48,6 +57,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         text.translatesAutoresizingMaskIntoConstraints = false
         text.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
+        text.sizeToFit()
         text.returnKeyType = UIReturnKeyType.done
         text.textColor = .black
         text.textAlignment = .left
@@ -60,6 +70,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "ЦВЕТ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
+        label.sizeToFit()
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 1
@@ -85,6 +96,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "ВРЕМЯ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
+        label.sizeToFit()
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 1
@@ -95,6 +107,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     let timeOfHabitTextField: UITextField = {
         let text = UITextField()
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
+        text.sizeToFit()
         text.textColor = .black
         text.textAlignment = .left
         text.text = "Каждый день в"
@@ -117,6 +130,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(UIColor(red: 1, green: 0.23, blue: 0.188, alpha: 1), for: .normal)
+        button.sizeToFit()
         button.backgroundColor = .clear
         return button
     }()
@@ -132,9 +146,34 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         setupConstraints()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc fileprivate func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    
+    @objc fileprivate func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    
 
     func setupNavigationBar(){
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить",
@@ -147,14 +186,16 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     func setupView() {
         view.backgroundColor = .white
-        view.addSubview(titleForNameOfHabitLabel)
-        view.addSubview(nameHabitTextField)
-        view.addSubview(titleForColorOfHabitLabel)
-        view.addSubview(colorOfHabitView)
-        view.addSubview(titleForTimeOfHabitLabel)
-        view.addSubview(timeOfHabitTextField)
-        view.addSubview(setTimeOfHabitPickerView)
-        view.addSubview(buttonDeleteHabit)
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerView)
+        containerView.addSubview(titleForNameOfHabitLabel)
+        containerView.addSubview(nameHabitTextField)
+        containerView.addSubview(titleForColorOfHabitLabel)
+        containerView.addSubview(colorOfHabitView)
+        containerView.addSubview(titleForTimeOfHabitLabel)
+        containerView.addSubview(timeOfHabitTextField)
+        containerView.addSubview(setTimeOfHabitPickerView)
+        containerView.addSubview(buttonDeleteHabit)
 
     }
     
@@ -181,14 +222,40 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
  
     
     func setupConstraints(){
+        let allHeigh = view.frame.size.height - (
+            titleForNameOfHabitLabel.frame.size.height
+            + nameHabitTextField.frame.size.height
+            + titleForColorOfHabitLabel.frame.size.height
+            + colorOfHabitView.frame.size.height
+            + titleForTimeOfHabitLabel.frame.size.height
+            + timeOfHabitTextField.frame.size.height
+            + setTimeOfHabitPickerView.frame.size.height
+            + buttonDeleteHabit.frame.size.height
+            + 0)
+        print(allHeigh)
+
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         [
-            titleForNameOfHabitLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleForNameOfHabitLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            
+            titleForNameOfHabitLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            titleForNameOfHabitLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             titleForNameOfHabitLabel.widthAnchor.constraint(equalToConstant: 75),
             
             nameHabitTextField.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             nameHabitTextField.topAnchor.constraint(equalTo: titleForNameOfHabitLabel.bottomAnchor, constant: 7),
-            nameHabitTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+            nameHabitTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32),
             
             titleForColorOfHabitLabel.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             titleForColorOfHabitLabel.topAnchor.constraint(equalTo: nameHabitTextField.bottomAnchor, constant: 15),
@@ -205,17 +272,17 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             
             timeOfHabitTextField.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             timeOfHabitTextField.topAnchor.constraint(equalTo: titleForTimeOfHabitLabel.bottomAnchor, constant: 7),
-            timeOfHabitTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
+            timeOfHabitTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32),
             
             setTimeOfHabitPickerView.leadingAnchor.constraint(equalTo: titleForNameOfHabitLabel.leadingAnchor),
             setTimeOfHabitPickerView.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor),
             
-            buttonDeleteHabit.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            buttonDeleteHabit.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
-            buttonDeleteHabit.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32)
+            buttonDeleteHabit.topAnchor.constraint(equalTo: timeOfHabitTextField.bottomAnchor, constant: allHeigh),
+            buttonDeleteHabit.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            buttonDeleteHabit.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -18),
+            buttonDeleteHabit.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32)
             
         ] .forEach{$0 .isActive = true}
-        
     }
     
     
