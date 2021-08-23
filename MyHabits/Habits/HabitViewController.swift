@@ -322,9 +322,19 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     // MARK: - CreateOrEditNewHabit setup
 
     @objc func saveHabit(){
-        guard !nameHabitTextField.text!.isEmpty else {return}
-        guard timeOfHabitLabel.text!.count > 14 else {return}
-        guard colorOfHabitView.backgroundColor != nil else {return}
+        var notification: String?
+        if nameHabitTextField.text!.isEmpty {
+            notification = "НАЗВАНИЕ"
+        } else if colorOfHabitView.backgroundColor == .white {
+            notification = "ЦВЕТ"
+        } else if timeOfHabitLabel.text!.count <= 14 {
+            notification = "ВРЕМЯ"
+        }
+        
+        guard notification == nil else {
+            dontCreateHabitAlert(notification: notification!)
+            return
+        }
         
         if let habit = habit {
             habit.name = nameHabitTextField.text ?? ""
@@ -418,3 +428,29 @@ extension HabitViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
 }
+
+
+// MARK: - notification about Habit
+extension HabitViewController {
+    
+    func dontCreateHabitAlert (notification: String){
+        let alert = UIAlertController(
+            title: "Заполните поле:\n",
+            message: notification,
+            preferredStyle: .alert)
+        
+        alert.setValue(NSAttributedString(string: alert.title!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.regular), NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
+        
+        alert.setValue(NSAttributedString(string: alert.message!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20,weight: UIFont.Weight.regular),NSAttributedString.Key.foregroundColor :UIColor.systemCustomPurple!]), forKey: "attributedMessage")
+        
+        alert.view.tintColor = .black
+
+                
+        let ok = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(ok)
+ 
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
