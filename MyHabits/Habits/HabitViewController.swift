@@ -110,7 +110,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         text.sizeToFit()
         text.textColor = .black
         text.textAlignment = .left
-        text.text = "Каждый день в"
+        text.text = "Каждый день в "
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
@@ -130,7 +130,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Удалить привычку", for: .normal)
-        button.setTitleColor(UIColor(red: 1, green: 0.23, blue: 0.188, alpha: 1), for: .normal)
+        button.setTitleColor(.red, for: .normal)
         button.sizeToFit()
         button.backgroundColor = .clear
         return button
@@ -179,15 +179,15 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             nameHabitTextField.textColor = habit.color
             colorOfHabitView.backgroundColor = habit.color
             colorOfHabitView.layer.borderWidth = 0
-            tempDateOfHabit = habit.date
-            tempDateString = habit.dateString
+            setTimeOfHabitPickerView.date = habit.date
+            timeOfHabitLabel.text = habit.dateString
             navigationItem.title = "Править"
             buttonDeleteHabit.isHidden = false
             editDate()
         } else {
             nameHabitTextField.text = ""
             colorOfHabitView.backgroundColor = .white
-            tempDateOfHabit = Date()
+            setTimeOfHabitPickerView.date = Date()
             navigationItem.title = "Создать"
             buttonDeleteHabit.isHidden = true
         }
@@ -292,33 +292,27 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     
     // MARK: - TimeTextField setup
-
-    var tempDateOfHabit: Date?
-    var tempDateString: String?
-
     
     @objc func chooseTime(sender:UIDatePicker) {
-        tempDateOfHabit = sender.date
+        habit?.date = sender.date
+        let string: String = "Каждый день в "
+        let time: String = dateFormatter.string(from: sender.date)
         
-        let textFullTimeTextField = NSMutableAttributedString(string: "Каждый день в " + dateFormatter.string(from: tempDateOfHabit!))
-        let time = (textFullTimeTextField.string as NSString).range(of: dateFormatter.string(from: tempDateOfHabit!))
+        let textFullTimeTextField = NSMutableAttributedString(string: string + time)
         
-        textFullTimeTextField.setAttributes([
-            .foregroundColor: UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1),
-        ], range: time)
+        textFullTimeTextField.addAttribute(.foregroundColor, value: UIColor.systemCustomPurple ?? UIColor.red, range: NSRange(location: string.count, length: time.count))
         
         timeOfHabitLabel.attributedText = textFullTimeTextField
     }
 
     
     func editDate(){
-        guard let tempString = tempDateString else {return}
-        let textFullTimeTextField = NSMutableAttributedString(string: tempString)
-        let time = (textFullTimeTextField.string as NSString).range(of: dateFormatter.string(from: tempDateOfHabit!))
+        guard let tempString = timeOfHabitLabel.text else {return}
+        let string: String = "Каждый день в "
         
-        textFullTimeTextField.setAttributes([
-            .foregroundColor: UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1),
-        ], range: time)
+        let textFullTimeTextField = NSMutableAttributedString(string: tempString)
+
+        textFullTimeTextField.addAttribute(.foregroundColor, value: UIColor.systemCustomPurple ?? UIColor.red, range: NSRange(location: string.count, length: tempString.count - string.count))
         
         timeOfHabitLabel.attributedText = textFullTimeTextField
     }
@@ -329,17 +323,17 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
 
     @objc func saveHabit(){
         guard !nameHabitTextField.text!.isEmpty else {return}
-        guard tempDateOfHabit != nil else {return}
+        guard timeOfHabitLabel.text!.count > 14 else {return}
         guard colorOfHabitView.backgroundColor != nil else {return}
         
         if let habit = habit {
             habit.name = nameHabitTextField.text ?? ""
-            habit.date = tempDateOfHabit ?? Date()
+            habit.date = setTimeOfHabitPickerView.date
             habit.color = colorOfHabitView.backgroundColor ?? .white
             HabitsStore.shared.save()
         } else {
             let newHabit = Habit(name: nameHabitTextField.text ?? "",
-                                 date: tempDateOfHabit ?? Date(),
+                                 date: setTimeOfHabitPickerView.date,
                                  color: colorOfHabitView.backgroundColor ?? .white)
             
             let store = HabitsStore.shared

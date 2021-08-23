@@ -39,7 +39,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         let view = UIProgressView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.tintColor = .gray
-        view.progressTintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
+        view.progressTintColor = .systemCustomPurple
         return view
     }()
     

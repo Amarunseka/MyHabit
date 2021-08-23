@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4511D4A826D3CECC009517E4 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */; };
 		454C3F2B26C14F3600A1A0A7 /* SFProText_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */; };
 		454C3F2C26C14F3600A1A0A7 /* SFProText_Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */; };
 		454C3F2D26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Regular.ttf; sourceTree = "<group>"; };
 		454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Semibold.ttf; sourceTree = "<group>"; };
 		454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProDisplay_Semibold.otf; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4511D4A626D3CE97009517E4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		454C3F3226C1670A00A1A0A7 /* Habits */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +110,7 @@
 				454C3F3226C1670A00A1A0A7 /* Habits */,
 				45BDC30B26C1442600EA9EF9 /* Info */,
 				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
+				4511D4A626D3CE97009517E4 /* Extensions */,
 				45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */,
 				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
 				45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */,
@@ -204,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45BDC30A26C1400600EA9EF9 /* HabitsStore.swift in Sources */,
+				4511D4A826D3CECC009517E4 /* UIColorExtensions.swift in Sources */,
 				45BDC2F626C12CFC00EA9EF9 /* ViewController.swift in Sources */,
 				454C3F3826C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift in Sources */,
 				454C3F2F26C1541C00A1A0A7 /* InfoStorage.swift in Sources */,

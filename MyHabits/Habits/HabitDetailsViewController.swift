@@ -69,7 +69,7 @@ class HabitDetailsViewController: UIViewController {
     
     func setupTableView(){
         view.addSubview(tableView)
-        tableView.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
+        tableView.backgroundColor = .systemCustomLightGray
         tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.dataSource = self
@@ -119,7 +119,7 @@ extension HabitDetailsViewController: UITableViewDataSource {
         var cellContent = cell.defaultContentConfiguration()
         cellContent.text = HabitsStore.shared.trackDateString(forIndex: indexPath.row)
         cell.contentConfiguration = cellContent
-        cell.tintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
+        cell.tintColor = .systemCustomPurple
         
         if HabitsStore.shared.habit(
             habit, isTrackedIn: HabitsStore.shared.dates[indexPath.row]) == true {

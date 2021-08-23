@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        UITabBar.appearance().tintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
-        UINavigationBar.appearance().tintColor = UIColor(red: 0.631, green: 0.0863, blue: 0.8, alpha: 1)
+        UITabBar.appearance().tintColor = .systemCustomPurple
+        UINavigationBar.appearance().tintColor = .systemCustomPurple
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

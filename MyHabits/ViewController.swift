@@ -24,14 +24,11 @@ class ViewController: UITabBarController {
 
     func setupTabBar() {
         
-        
-        
         habits.tabBarItem.title = "Привычки"
         habits.tabBarItem.image = UIImage(systemName: "rectangle.grid.1x2.fill")
         
         info.tabBarItem.title = "Информация"
         info.tabBarItem.image = UIImage(systemName: "info.circle.fill")
-
         
         viewControllers = [habits, info]
         

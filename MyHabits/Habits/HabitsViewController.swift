@@ -25,7 +25,7 @@ class HabitsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
+        view.backgroundColor = .white
         setupCollectionView()
         setupConstraints()
     }
@@ -41,7 +41,7 @@ class HabitsViewController: UIViewController {
     
     func setupNavigationBar() {
         appearanceNB.configureWithOpaqueBackground()
-        appearanceNB.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 1)
+        appearanceNB.backgroundColor = .white
         navigationItem.title = "Сегодня"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
@@ -56,7 +56,7 @@ class HabitsViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        collectionView.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
+        collectionView.backgroundColor = .systemCustomLightGray
         
         collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: habitCellID)
         collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: progressCellID)
