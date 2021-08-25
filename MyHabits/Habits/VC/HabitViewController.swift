@@ -171,6 +171,8 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             buttonDeleteHabit)
         
         scrollView.keyboardDismissMode = .onDrag
+        nameHabitTextField.delegate = self
+        
     }
     
     
@@ -324,19 +326,11 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     // MARK: - CreateOrEditNewHabit setup
 
     @objc private func saveHabit(){
-        var notification: String?
-        if nameHabitTextField.text!.isEmpty {
-            notification = "НАЗВАНИЕ"
-        } else if colorOfHabitView.backgroundColor == .white {
-            notification = "ЦВЕТ"
-        } else if timeOfHabitLabel.text!.count <= 14 {
-            notification = "ВРЕМЯ"
-        }
+
+        guard isHabitCompleted() == nil else {
+            dontCreateHabitAlert(isHabitCompleted() ?? "")
+            return}
         
-        guard notification == nil else {
-            dontCreateHabitAlert(notification!)
-            return
-        }
         
         if let habit = habit {
             habit.name = nameHabitTextField.text ?? ""
@@ -398,7 +392,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
 
 
 // MARK: - extension KeyboardSetup
-extension HabitViewController {
+extension HabitViewController: UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -429,10 +423,16 @@ extension HabitViewController {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 }
 
 
-// MARK: - notification about Habit
+// MARK: - check creating Habit
 extension HabitViewController {
     
     private func dontCreateHabitAlert (_ notification: String){
@@ -446,13 +446,30 @@ extension HabitViewController {
         alert.setValue(NSAttributedString(string: alert.message!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 20,weight: UIFont.Weight.regular),NSAttributedString.Key.foregroundColor :UIColor.systemCustomPurple!]), forKey: "attributedMessage")
         
         alert.view.tintColor = .black
-
-                
+        
+        
         let ok = UIAlertAction(title: "Ok", style: .default)
         
         alert.addAction(ok)
- 
+        
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+    func isHabitCompleted() -> String? {
+        let string: String = "Каждый день в "
+        
+        var notification: String?
+        
+        if nameHabitTextField.text?.isEmpty == true {
+            notification = "НАЗВАНИЕ"
+        } else if colorOfHabitView.backgroundColor == .white {
+            notification = "ЦВЕТ"
+        } else if (timeOfHabitLabel.text?.count ?? 0) <= string.count {
+            notification = "ВРЕМЯ"
+        }
+        
+        return notification
+    }
 }
-
