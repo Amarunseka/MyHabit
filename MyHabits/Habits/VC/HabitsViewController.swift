@@ -16,11 +16,9 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
         
-    let appearanceNB = UINavigationBarAppearance()
+    private let appearanceNB = UINavigationBarAppearance()
     
-    let habitCellID = "HabitCellID"
-    let progressCellID = "ProgressCellID"
-    let sideSpacing: CGFloat = 16
+    private let sideSpacing: CGFloat = 16
     
     
     override func viewDidLoad() {
@@ -39,7 +37,7 @@ class HabitsViewController: UIViewController {
     }
 
     
-    func setupNavigationBar() {
+    private func setupNavigationBar() {
         appearanceNB.configureWithOpaqueBackground()
         appearanceNB.backgroundColor = .white
         navigationItem.title = "Сегодня"
@@ -50,7 +48,7 @@ class HabitsViewController: UIViewController {
             barButtonSystemItem: .add, target: self, action: #selector(createNewHabit))
     }
     
-    func setupCollectionView() {
+    private func setupCollectionView() {
         view.addSubview(collectionView)
 
         collectionView.dataSource = self
@@ -58,20 +56,21 @@ class HabitsViewController: UIViewController {
         
         collectionView.backgroundColor = .systemCustomLightGray
         
-        collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: habitCellID)
-        collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: progressCellID)
+        collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: HabitCollectionViewCell.self))
+        collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: ProgressCollectionViewCell.self))
     }
     
     
-    func setupConstraints(){
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        [
+    private func setupConstraints(){
+        collectionView.toAutoLayout()
+        let constraints = [
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
-        ].forEach{$0 .isActive = true}
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
     
@@ -108,12 +107,12 @@ extension HabitsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: progressCellID, for: indexPath) as! ProgressCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgressCollectionViewCell.self), for: indexPath) as! ProgressCollectionViewCell
             cell.setupProgress(progress: HabitsStore.shared.todayProgress)
             return cell
         }
         else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: habitCellID, for: indexPath) as! HabitCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HabitCollectionViewCell.self), for: indexPath) as! HabitCollectionViewCell
             
             cell.configure(with: HabitsStore.shared.habits[indexPath.item])
             cell.delegate = self

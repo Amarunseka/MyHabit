@@ -13,14 +13,14 @@ protocol HabitCollectionCellDelegate: AnyObject {
 
 class HabitCollectionViewCell: UICollectionViewCell {
         
-    var habit: Habit?
+    private var habit: Habit?
     
     weak var delegate: HabitCollectionCellDelegate?
     
     
-    let titleOfHabitLabel: UILabel = {
+    private let titleOfHabitLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.font = UIFont(name: "SFProText-Semibold", size: 17)
         label.sizeToFit()
         label.textAlignment = .left
@@ -29,9 +29,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    let timeToDoItLabel: UILabel = {
+    private let timeToDoItLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.font = UIFont(name: "SFProText-Regular", size: 12)
         label.textColor = .systemGray2
         label.sizeToFit()
@@ -41,9 +41,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    let counterOfExecutionsLabel: UILabel = {
+    private let counterOfExecutionsLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.font = UIFont(name: "SFProText-Regular", size: 13)
         label.textColor = .systemGray
         label.sizeToFit()
@@ -54,20 +54,20 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    let markOfCompletion: UIView = {
+    private let markOfCompletion: UIView = {
         let view = UIView()
         view.frame.size = CGSize(width: 38, height: 38)
         view.layer.cornerRadius = view.frame.height / 2
         view.clipsToBounds = true
         view.layer.borderWidth = 2
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.toAutoLayout()
         return view
     }()
     
     
-    lazy var checkmark: UIImageView = {
+    private lazy var checkmark: UIImageView = {
         let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
+        image.toAutoLayout()
         image.image = UIImage(systemName: "checkmark")
         image.tintColor = .white
         image.alpha = 0
@@ -75,9 +75,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    let changeColorButton: UIButton = {
+    private let changeColorButton: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.toAutoLayout()
         button.backgroundColor = .clear
         return button
     }()
@@ -90,40 +90,44 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure(with: Habit) {
-        titleOfHabitLabel.text = with.name
-        timeToDoItLabel.text = with.dateString
-        counterOfExecutionsLabel.text = "Счётчик: \(with.trackDates.count)"
-        titleOfHabitLabel.textColor = with.color
-        markOfCompletion.layer.borderColor = with.color.cgColor
+    func configure(with habit: Habit) {
+        titleOfHabitLabel.text = habit.name
+        timeToDoItLabel.text = habit.dateString
+        counterOfExecutionsLabel.text = "Счётчик: \(habit.trackDates.count)"
+        titleOfHabitLabel.textColor = habit.color
+        markOfCompletion.layer.borderColor = habit.color.cgColor
         
-        if with.isAlreadyTakenToday == true {
-            markOfCompletion.backgroundColor = with.color
+        if habit.isAlreadyTakenToday == true {
+            markOfCompletion.backgroundColor = habit.color
             checkmark.alpha = 1
         } else {
             markOfCompletion.backgroundColor = .white
         }
-        habit = with
+        self.habit = habit
     }
     
     
-    func setupCell() {
+    private func setupCell() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 8
         contentView.clipsToBounds = true
         
-        contentView.addSubview(titleOfHabitLabel)
-        contentView.addSubview(timeToDoItLabel)
-        contentView.addSubview(counterOfExecutionsLabel)
-        contentView.addSubview(markOfCompletion)
-        markOfCompletion.addSubview(checkmark)
-        markOfCompletion.addSubview(changeColorButton)
+        contentView.addSubviews(
+            titleOfHabitLabel,
+            timeToDoItLabel,
+            counterOfExecutionsLabel,
+            markOfCompletion)
+        
+        markOfCompletion.addSubviews(
+            checkmark,
+            changeColorButton)
+        
         changeColorButton.addTarget(self, action: #selector(tapHabitButton), for: .touchUpInside)
     }
     
     
-    func setupConstraints() {
-        [
+    private func setupConstraints() {
+        let constraints = [
             titleOfHabitLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             titleOfHabitLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             titleOfHabitLabel.widthAnchor.constraint(equalToConstant: 220),
@@ -151,7 +155,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
             changeColorButton.widthAnchor.constraint(equalTo: markOfCompletion.widthAnchor),
             changeColorButton.heightAnchor.constraint(equalTo: markOfCompletion.heightAnchor)
             
-        ].forEach{$0 .isActive = true}
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
     
@@ -160,7 +165,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
     
     
-    @objc func tapHabitButton() {
+    @objc private func tapHabitButton() {
         guard let habit = habit else { return }
         
         if habit.isAlreadyTakenToday == false {

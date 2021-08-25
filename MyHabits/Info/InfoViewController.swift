@@ -9,23 +9,23 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scroll = UIScrollView(frame: .zero)
-        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.toAutoLayout()
         return scroll
     }()
     
     
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.toAutoLayout()
         return view
     }()
     
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let text = UILabel()
-        text.translatesAutoresizingMaskIntoConstraints = false
+        text.toAutoLayout()
         text.font = UIFont(name: "SFProDisplay-Semibold", size: 20)
         text.textColor = .black
         text.textAlignment = .left
@@ -35,9 +35,9 @@ class InfoViewController: UIViewController {
     }()
     
     
-    let textLabel: UILabel = {
+    private let textLabel: UILabel = {
         let text = UILabel()
-        text.translatesAutoresizingMaskIntoConstraints = false
+        text.toAutoLayout()
         text.font = UIFont(name: "SFProText-Regular", size: 17)
         text.textColor = .black
         text.textAlignment = .left
@@ -53,12 +53,13 @@ class InfoViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(textLabel)
+        containerView.addSubviews(
+            titleLabel,
+            textLabel)
         setupConstraint()
     }
     
-    func setupConstraint(){
+    private func setupConstraint(){
         [
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

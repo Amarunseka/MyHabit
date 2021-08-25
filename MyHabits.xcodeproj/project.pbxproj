@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4511D4A826D3CECC009517E4 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */; };
+		4511D4B626D63C4D009517E4 /* AddSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D4B526D63C4D009517E4 /* AddSubviews.swift */; };
+		4511D4B826D63C68009517E4 /* ToAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D4B726D63C68009517E4 /* ToAutoLayout.swift */; };
 		454C3F2B26C14F3600A1A0A7 /* SFProText_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */; };
 		454C3F2C26C14F3600A1A0A7 /* SFProText_Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */; };
 		454C3F2D26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		4511D4B526D63C4D009517E4 /* AddSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubviews.swift; sourceTree = "<group>"; };
+		4511D4B726D63C68009517E4 /* ToAutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToAutoLayout.swift; sourceTree = "<group>"; };
 		454C3F2826C14F3600A1A0A7 /* SFProText_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Regular.ttf; sourceTree = "<group>"; };
 		454C3F2926C14F3600A1A0A7 /* SFProText_Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProText_Semibold.ttf; sourceTree = "<group>"; };
 		454C3F2A26C14F3600A1A0A7 /* SFProDisplay_Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SFProDisplay_Semibold.otf; sourceTree = "<group>"; };
@@ -69,18 +73,37 @@
 			isa = PBXGroup;
 			children = (
 				4511D4A726D3CECC009517E4 /* UIColorExtensions.swift */,
+				4511D4B526D63C4D009517E4 /* AddSubviews.swift */,
+				4511D4B726D63C68009517E4 /* ToAutoLayout.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4511D4B326D63BB7009517E4 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */,
+				454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */,
+				454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4511D4B426D63BC1009517E4 /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				454C3F3326C167DE00A1A0A7 /* HabitCollectionViewCell.swift */,
+				454C3F3726C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift */,
+			);
+			path = CollectionCells;
 			sourceTree = "<group>";
 		};
 		454C3F3226C1670A00A1A0A7 /* Habits */ = {
 			isa = PBXGroup;
 			children = (
-				45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */,
-				454C3F3326C167DE00A1A0A7 /* HabitCollectionViewCell.swift */,
-				454C3F3726C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift */,
-				454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */,
-				454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */,
+				4511D4B326D63BB7009517E4 /* VC */,
+				4511D4B426D63BC1009517E4 /* CollectionCells */,
+				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
 			);
 			path = Habits;
 			sourceTree = "<group>";
@@ -109,7 +132,6 @@
 				45BDC2F526C12CFC00EA9EF9 /* ViewController.swift */,
 				454C3F3226C1670A00A1A0A7 /* Habits */,
 				45BDC30B26C1442600EA9EF9 /* Info */,
-				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
 				4511D4A626D3CE97009517E4 /* Extensions */,
 				45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */,
 				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
@@ -220,6 +242,8 @@
 				454C3F3826C1BF7D00A1A0A7 /* ProgressCollectionViewCell.swift in Sources */,
 				454C3F2F26C1541C00A1A0A7 /* InfoStorage.swift in Sources */,
 				45BDC2F226C12CFC00EA9EF9 /* AppDelegate.swift in Sources */,
+				4511D4B626D63C4D009517E4 /* AddSubviews.swift in Sources */,
+				4511D4B826D63C68009517E4 /* ToAutoLayout.swift in Sources */,
 				454C3F3A26C1C68800A1A0A7 /* HabitViewController.swift in Sources */,
 				45BDC2F426C12CFC00EA9EF9 /* SceneDelegate.swift in Sources */,
 				45BDC30F26C1480F00EA9EF9 /* FontsViewController.swift in Sources */,

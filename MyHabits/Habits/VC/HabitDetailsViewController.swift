@@ -9,12 +9,11 @@ import UIKit
 
 class HabitDetailsViewController: UIViewController {
     
-    let cellID = "CellID"
-    var habit: Habit
+    private var habit: Habit
         
-    let activityLabel: UILabel = {
+    private let activityLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.text = "АКТИВНОСТЬ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.sizeToFit()
@@ -24,9 +23,9 @@ class HabitDetailsViewController: UIViewController {
         return label
     }()
     
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
-        table.translatesAutoresizingMaskIntoConstraints = false
+        table.toAutoLayout()
         table.backgroundColor = .white
         return table
     }()
@@ -55,11 +54,11 @@ class HabitDetailsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(changeTitle), name: NSNotification.Name(rawValue: "changeTitle"), object: nil)
     }
     
-    @objc func changeTitle() {
+    @objc private func changeTitle() {
         navigationItem.title = habit.name
     }
     
-    func setupView(){
+    private func setupView(){
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(editHabit))
         view.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
@@ -67,17 +66,17 @@ class HabitDetailsViewController: UIViewController {
     }
     
     
-    func setupTableView(){
+    private func setupTableView(){
         view.addSubview(tableView)
         tableView.backgroundColor = .systemCustomLightGray
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
         tableView.dataSource = self
     }
     
     
-    func setupConstraints(){
-        [
+    private func setupConstraints(){
+        let constraints = [
             activityLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             activityLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
             activityLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: -32),
@@ -87,11 +86,13 @@ class HabitDetailsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 
-        ] .forEach{$0 .isActive = true}
+        ]
+        NSLayoutConstraint.activate(constraints)
+
     }
 
     
-    @objc func editHabit(){
+    @objc private func editHabit(){
         let editHabitController = HabitViewController()
         editHabitController.habit = habit
         editHabitController.backToHabitsVCDelegate = self
@@ -115,7 +116,7 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self))!
         var cellContent = cell.defaultContentConfiguration()
         cellContent.text = HabitsStore.shared.trackDateString(forIndex: indexPath.row)
         cell.contentConfiguration = cellContent

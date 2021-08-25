@@ -22,16 +22,16 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         }
     }
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
     
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.toAutoLayout()
         return view
     }()
     
-    let dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_Ru")
         formatter.dateFormat = "hh:mm a"
@@ -39,9 +39,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
 
     
-    let titleForNameOfHabitLabel: UILabel = {
+    private let titleForNameOfHabitLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.text = "НАЗВАНИЕ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.sizeToFit()
@@ -52,9 +52,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
     
     
-    let nameHabitTextField: UITextField = {
+    private let nameHabitTextField: UITextField = {
         let text = UITextField()
-        text.translatesAutoresizingMaskIntoConstraints = false
+        text.toAutoLayout()
         text.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
         text.sizeToFit()
@@ -65,9 +65,9 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
     
     
-    let titleForColorOfHabitLabel: UILabel = {
+    private let titleForColorOfHabitLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.text = "ЦВЕТ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.sizeToFit()
@@ -78,7 +78,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
     
     
-    let colorOfHabitView: UIView = {
+    private let colorOfHabitView: UIView = {
         let view = UIView()
         view.frame.size = CGSize(width: 30, height: 30)
         view.layer.cornerRadius = view.frame.height / 2
@@ -86,14 +86,14 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.systemGray.cgColor
         view.isUserInteractionEnabled = true
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.toAutoLayout()
         return view
     }()
     
     
-    let titleForTimeOfHabitLabel: UILabel = {
+    private let titleForTimeOfHabitLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.toAutoLayout()
         label.text = "ВРЕМЯ"
         label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.sizeToFit()
@@ -104,31 +104,31 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }()
     
     
-    let timeOfHabitLabel: UILabel = {
+    private let timeOfHabitLabel: UILabel = {
         let text = UILabel()
         text.font = UIFont(name: "SFProText-Semibold", size: 13)
         text.sizeToFit()
         text.textColor = .black
         text.textAlignment = .left
         text.text = "Каждый день в "
-        text.translatesAutoresizingMaskIntoConstraints = false
+        text.toAutoLayout()
         return text
     }()
     
     
-    let setTimeOfHabitPickerView: UIDatePicker = {
+    private let setTimeOfHabitPickerView: UIDatePicker = {
         let time = UIDatePicker()
         time.preferredDatePickerStyle = .wheels
         time.datePickerMode = .time
         time.addTarget(self, action: #selector (chooseTime), for: .valueChanged)
-        time.translatesAutoresizingMaskIntoConstraints = false
+        time.toAutoLayout()
         return time
     }()
     
     
-    let buttonDeleteHabit: UIButton = {
+    private let buttonDeleteHabit: UIButton = {
         let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.toAutoLayout()
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.sizeToFit()
@@ -147,7 +147,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
     
 
-    func setupNavigationBar(){
+    private func setupNavigationBar(){
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить",
             style: .plain, target: self, action: #selector(closeWindow))
         
@@ -156,24 +156,25 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
     
     
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubview(titleForNameOfHabitLabel)
-        containerView.addSubview(nameHabitTextField)
-        containerView.addSubview(titleForColorOfHabitLabel)
-        containerView.addSubview(colorOfHabitView)
-        containerView.addSubview(titleForTimeOfHabitLabel)
-        containerView.addSubview(timeOfHabitLabel)
-        containerView.addSubview(setTimeOfHabitPickerView)
-        containerView.addSubview(buttonDeleteHabit)
+        containerView.addSubviews(
+            titleForNameOfHabitLabel,
+            nameHabitTextField,
+            titleForColorOfHabitLabel,
+            colorOfHabitView,
+            titleForTimeOfHabitLabel,
+            timeOfHabitLabel,
+            setTimeOfHabitPickerView,
+            buttonDeleteHabit)
         
         scrollView.keyboardDismissMode = .onDrag
     }
     
     
-    func editHabit() {
+    private func editHabit() {
         if let habit = habit {
             nameHabitTextField.text = habit.name
             nameHabitTextField.textColor = habit.color
@@ -194,7 +195,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
  
     
-    func setupConstraints(){
+    private func setupConstraints(){
         let allElementHeigh = view.frame.size.height - (
             titleForNameOfHabitLabel.frame.size.height
             + nameHabitTextField.frame.size.height
@@ -206,8 +207,8 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             + buttonDeleteHabit.frame.size.height
         )
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        [
+        scrollView.toAutoLayout()
+        let constraints = [
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -253,19 +254,20 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
             buttonDeleteHabit.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -18),
             buttonDeleteHabit.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: -32)
             
-        ] .forEach{$0 .isActive = true}
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
     
     
    // MARK: - ColorView setup
     
-    func setupColorHabit() {
+    private func setupColorHabit() {
         colorOfHabitView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(choseColor)))
     }
     
     
-    @objc func choseColor(sender: UITapGestureRecognizer) {
+    @objc private func choseColor(sender: UITapGestureRecognizer) {
         let colorPickerVC = UIColorPickerViewController()
         colorPickerVC.delegate = self
         colorPickerVC.selectedColor = colorOfHabitView.backgroundColor ?? .black
@@ -273,7 +275,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
 
     
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+    internal func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         colorOfHabitView.backgroundColor = color
         colorOfHabitView.layer.borderWidth = 0
@@ -281,7 +283,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         
     }
     
-    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+    internal func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         colorOfHabitView.backgroundColor = color
         colorOfHabitView.layer.borderWidth = 0
@@ -293,7 +295,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     // MARK: - TimeTextField setup
     
-    @objc func chooseTime(sender:UIDatePicker) {
+    @objc private func chooseTime(sender:UIDatePicker) {
         habit?.date = sender.date
         let string: String = "Каждый день в "
         let time: String = dateFormatter.string(from: sender.date)
@@ -306,7 +308,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
 
     
-    func editDate(){
+    private func editDate(){
         guard let tempString = timeOfHabitLabel.text else {return}
         let string: String = "Каждый день в "
         
@@ -321,7 +323,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     // MARK: - CreateOrEditNewHabit setup
 
-    @objc func saveHabit(){
+    @objc private func saveHabit(){
         var notification: String?
         if nameHabitTextField.text!.isEmpty {
             notification = "НАЗВАНИЕ"
@@ -332,7 +334,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
         }
         
         guard notification == nil else {
-            dontCreateHabitAlert(notification: notification!)
+            dontCreateHabitAlert(notification!)
             return
         }
         
@@ -358,12 +360,12 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
 
     // MARK: - DeleteHabit setup
     
-    func setupDeleteButton() {
+    private func setupDeleteButton() {
         buttonDeleteHabit.addTarget(self, action: #selector(deleteHabit), for: .touchUpInside)
 
     }
     
-    @objc func deleteHabit(_ sender: UIButton) {
+    @objc private func deleteHabit(_ sender: UIButton) {
         guard let habit = habit else {return}
         let alert = UIAlertController(
             title: "Удалить привычку",
@@ -389,7 +391,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     
     // MARK: - Close window
-    @objc func closeWindow(){
+    @objc private func closeWindow(){
         dismiss(animated: true, completion: nil)
     }
 }
@@ -433,7 +435,7 @@ extension HabitViewController {
 // MARK: - notification about Habit
 extension HabitViewController {
     
-    func dontCreateHabitAlert (notification: String){
+    private func dontCreateHabitAlert (_ notification: String){
         let alert = UIAlertController(
             title: "Заполните поле:\n",
             message: notification,
