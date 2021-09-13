@@ -38,6 +38,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     private let progressView: UIProgressView = {
         let view = UIProgressView()
         view.toAutoLayout()
+        view.progressViewStyle = .default 
         view.tintColor = .gray
         view.progressTintColor = .systemCustomPurple
         return view

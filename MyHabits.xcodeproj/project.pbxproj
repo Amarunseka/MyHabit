@@ -82,6 +82,7 @@
 		4511D4B326D63BB7009517E4 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				45BDC2F526C12CFC00EA9EF9 /* ViewController.swift */,
 				45BDC30526C12D9F00EA9EF9 /* HabitsViewController.swift */,
 				454C3F3926C1C68800A1A0A7 /* HabitViewController.swift */,
 				454C3F3D26C3E62300A1A0A7 /* HabitDetailsViewController.swift */,
@@ -103,9 +104,38 @@
 			children = (
 				4511D4B326D63BB7009517E4 /* VC */,
 				4511D4B426D63BC1009517E4 /* CollectionCells */,
-				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
+				458CBC8826EA9C6000915CA1 /* Storage */,
 			);
 			path = Habits;
+			sourceTree = "<group>";
+		};
+		458CBC8826EA9C6000915CA1 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC30926C1400600EA9EF9 /* HabitsStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		458CBC8926EA9CF600915CA1 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC2F126C12CFC00EA9EF9 /* AppDelegate.swift */,
+				45BDC2F326C12CFC00EA9EF9 /* SceneDelegate.swift */,
+				45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		458CBC8A26EA9D3900915CA1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
+				45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */,
+				45BDC2FF26C12D0000EA9EF9 /* Info.plist */,
+				45BDC31026C1495C00EA9EF9 /* Fonts */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		45BDC2E526C12CFC00EA9EF9 = {
@@ -127,17 +157,11 @@
 		45BDC2F026C12CFC00EA9EF9 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
-				45BDC2F126C12CFC00EA9EF9 /* AppDelegate.swift */,
-				45BDC2F326C12CFC00EA9EF9 /* SceneDelegate.swift */,
-				45BDC2F526C12CFC00EA9EF9 /* ViewController.swift */,
+				458CBC8926EA9CF600915CA1 /* Application */,
 				454C3F3226C1670A00A1A0A7 /* Habits */,
 				45BDC30B26C1442600EA9EF9 /* Info */,
+				458CBC8A26EA9D3900915CA1 /* Resources */,
 				4511D4A626D3CE97009517E4 /* Extensions */,
-				45BDC2FC26C12D0000EA9EF9 /* LaunchScreen.storyboard */,
-				45BDC2FA26C12D0000EA9EF9 /* Assets.xcassets */,
-				45BDC2F726C12CFC00EA9EF9 /* Main.storyboard */,
-				45BDC2FF26C12D0000EA9EF9 /* Info.plist */,
-				45BDC31026C1495C00EA9EF9 /* Fonts */,
 				454C3F4F26CF896B00A1A0A7 /* ResetUserDefaults.swift */,
 			);
 			path = MyHabits;
@@ -399,7 +423,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_FILE = MyHabits/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -417,7 +441,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = MyHabits/Info.plist;
+				INFOPLIST_FILE = MyHabits/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

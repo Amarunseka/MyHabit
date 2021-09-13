@@ -342,8 +342,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
                                  date: setTimeOfHabitPickerView.date,
                                  color: colorOfHabitView.backgroundColor ?? .white)
             
-            let store = HabitsStore.shared
-            store.habits.append(newHabit)
+            HabitsStore.shared.habits.append(newHabit)
         }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeTitle"), object: nil)
 

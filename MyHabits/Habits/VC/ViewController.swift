@@ -5,10 +5,6 @@
 //  Created by Миша on 09.08.2021.
 //
 
-// "SFProDisplay-Semibold"
-// "SFProText-Regular"
-// "SFProText-Semibold"
-
 import UIKit
 
 class ViewController: UITabBarController {
