@@ -51,7 +51,11 @@ class HabitDetailsViewController: UIViewController {
         super.viewWillAppear(false)
         
         navigationItem.title = habit.name
-        NotificationCenter.default.addObserver(self, selector: #selector(changeTitle), name: NSNotification.Name(rawValue: "changeTitle"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeTitle),
+            name: NSNotification.Name(rawValue: "changeTitle"),
+            object: nil)
     }
     
     @objc private func changeTitle() {
