@@ -297,7 +297,7 @@ class HabitViewController: UIViewController, UIColorPickerViewControllerDelegate
     
     // MARK: - TimeTextField setup
     
-    @objc private func chooseTime(sender:UIDatePicker) {
+    @objc private func chooseTime(sender: UIDatePicker) {
         habit?.date = sender.date
         let string: String = "Каждый день в "
         let time: String = dateFormatter.string(from: sender.date)
