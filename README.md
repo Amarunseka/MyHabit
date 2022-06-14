@@ -7,8 +7,6 @@
 ___
 
 ### На главном экране отображается.
-[![01_main](https://github.com/Amarunseka/MyHabit/blob/develop/assets/small/01_main.png)](https://github.com/Amarunseka/MyHabit/blob/develop/assets/01_main.png)
-[![02_main](https://github.com/Amarunseka/MyHabit/blob/develop/assets/small/02_main.png)](https://github.com/Amarunseka/MyHabit/blob/develop/assets/02_main.png)
 - Прогресс выполненных привычек на текущий день
 - Данные о привычках: 
    - название привычки
@@ -17,6 +15,9 @@ ___
    - индикатор выполнения на текущий день
 
 При отметке выполнения привычки прогресс заполняется пропорционально количеству созданных привычек.
+
+[![01_main](https://github.com/Amarunseka/MyHabit/blob/develop/assets/small/01_main.png)](https://github.com/Amarunseka/MyHabit/blob/develop/assets/01_main.png)
+[![02_main](https://github.com/Amarunseka/MyHabit/blob/develop/assets/small/02_main.png)](https://github.com/Amarunseka/MyHabit/blob/develop/assets/02_main.png)
 
 При нажатии на привычку на главном экране осуществляется переход на экран где отображается сколько раз была выполнена привычка с момента установки приложения.
 
